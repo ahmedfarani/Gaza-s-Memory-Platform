@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ذاكرة غزة — قصصنا تبقى</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+      <div class="hero__noise"></div>
+      <div class="hero__grid"></div>
+      <nav class="nav">
+        <div class="nav__logo">
+          <span class="nav__symbol">☽</span>
+          <span class="nav__title">ذاكرة غزة</span>
+        </div>
+        <div class="nav__links">
+          <a href="#stories" class="nav__link">القصص</a>
+          <a href="#share" class="nav__link nav__link--cta">شارك قصتك</a>
+        </div>
+      </nav>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow">منصة الذاكرة الحية</p>
+        <h1 class="hero__headline">
+          <span class="hero__line">قصصنا</span>
+          <span class="hero__line hero__line--accent">تبقى</span>
+        </h1>
+        <p class="hero__sub">
+          مكان لأهل غزة يحكوا فيه ذكرياتهم وحياتهم — لأن كل قصة تستاهل تتذكّر.
+        </p>
+        <div class="hero__actions">
+          <a href="#share" class="btn btn--primary">
+            <span>شارك قصتك</span>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </a>
+          <a href="#stories" class="btn btn--ghost">اقرأ القصص</a>
+        </div>
+      </div>
+
+      <div class="hero__scroll">
+        <span>↓</span>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__num" id="storyCount">0</span>
+          <span class="stat__label">قصة مشاركة</span>
+        </div>
+        <div class="stat__divider"></div>
+        <div class="stat">
+          <span class="stat__num">∞</span>
+          <span class="stat__label">ذكرى محفوظة</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="section stories-section" id="stories">
+      <div class="section__inner">
+        <div class="section__header">
+          <p class="section__label">الأرشيف الحي</p>
+          <h2 class="section__title">القصص المشاركة</h2>
+          <div class="section__line"></div>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn filter-btn--active" data-filter="all">
+            الكل
+          </button>
+          <button class="filter-btn" data-filter="ذكرى">ذكريات</button>
+          <button class="filter-btn" data-filter="عائلة">عائلة</button>
+          <button class="filter-btn" data-filter="حب">حب وأمل</button>
+          <button class="filter-btn" data-filter="صمود">صمود</button>
+        </div>
+
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="ابحث في القصص..."
+          />
+          <svg
+            class="search-icon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </div>
+
+        <div class="stories-grid" id="storiesGrid"></div>
+
+        <div class="empty-state" id="emptyState" style="display: none">
+          <div class="empty-state__icon">📜</div>
+          <h3>لا توجد قصص بعد</h3>
+          <p>كن أول من يشارك قصته من غزة</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section form-section" id="share">
+      <div class="form-section__inner">
+        <div class="form-section__deco"></div>
+
+        <div class="section__header section__header--light">
+          <p class="section__label">صوتك يهم</p>
+          <h2 class="section__title section__title--light">شارك قصتك</h2>
+          <div class="section__line section__line--light"></div>
+        </div>
+
+        <form class="story-form" id="storyForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="authorName" class="form-label"
+                >الاسم <span class="optional">(اختياري)</span></label
+              >
+              <input
+                type="text"
+                id="authorName"
+                class="form-input"
+                placeholder="اسمك أو اسم مستعار..."
+              />
+            </div>
+            <div class="form-group">
+              <label for="storyLocation" class="form-label"
+                >الحي / المدينة</label
+              >
+              <input
+                type="text"
+                id="storyLocation"
+                class="form-input"
+                placeholder="مثال: الشجاعية، رفح، غزة..."
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="storyDate" class="form-label">تاريخ القصة</label>
+              <input type="date" id="storyDate" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label for="storyTag" class="form-label">نوع القصة</label>
+              <select id="storyTag" class="form-input form-select">
+                <option value="ذكرى">ذكرى</option>
+                <option value="عائلة">عائلة</option>
+                <option value="حب">حب وأمل</option>
+                <option value="صمود">صمود</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="storyTitle" class="form-label">عنوان القصة *</label>
+            <input
+              type="text"
+              id="storyTitle"
+              class="form-input"
+              placeholder="أعطِ قصتك عنواناً..."
+              required
+            />
+            <span class="form-error" id="titleError">العنوان مطلوب</span>
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="storyContent" class="form-label">القصة *</label>
+            <textarea
+              id="storyContent"
+              class="form-textarea"
+              rows="8"
+              placeholder="احكِ قصتك بكلماتك الخاصة... كل تفصيلة تحكيها هي ذاكرة محفوظة."
+              required
+            ></textarea>
+            <div class="textarea-footer">
+              <span class="form-error" id="contentError">القصة مطلوبة</span>
+              <span class="char-count"
+                ><span id="charCount">0</span> / 3000</span
+              >
+            </div>
+          </div>
+
+          <div class="form-group form-group--full">
+            <label class="form-checkbox">
+              <input type="checkbox" id="agreeCheck" required />
+              <span class="checkbox-custom"></span>
+              <span>أوافق على نشر قصتي لتكون محفوظة وظاهرة للعامة</span>
+            </label>
+            <span class="form-error" id="agreeError">يجب الموافقة أولاً</span>
+          </div>
+
+          <button type="submit" class="btn btn--submit" id="submitBtn">
+            <span class="btn__text">نشر القصة</span>
+            <span class="btn__loader" style="display: none">...</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__logo">
+          <span class="nav__symbol">☽</span>
+          <span>ذاكرة غزة</span>
+        </div>
+        <p class="footer__quote">"من المظلم يُولَد الضوء" — ذاكرتنا لن تُمحى</p>
+        <p class="footer__copy">كل القصص محفوظة محلياً في متصفحك</p>
+        <p class="footer__copy">اعداد المهندسين : هادي أبو عيشة و أحمد فراني</p>
+      </div>
+    </footer>
+
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal" id="storyModal">
+        <button class="modal__close" id="modalClose">✕</button>
+        <div class="modal__tag" id="modalTag"></div>
+        <h2 class="modal__title" id="modalTitle"></h2>
+        <div class="modal__meta">
+          <span id="modalAuthor"></span>
+          <span class="modal__dot">•</span>
+          <span id="modalLocation"></span>
+          <span class="modal__dot">•</span>
+          <span id="modalDate"></span>
+        </div>
+        <div class="modal__divider"></div>
+        <div class="modal__body" id="modalBody"></div>
+        <div class="modal__actions">
+          <button class="btn btn--ghost btn--small" id="modalCopyBtn">
+            نسخ القصة
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <span class="toast__icon">✓</span>
+      <span id="toastMsg">تم نشر قصتك بنجاح!</span>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
