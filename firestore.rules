@@ -1,0 +1,72 @@
+// firestore.rules
+// قواعد الأمان لـ Firestore
+
+// كيفية النشر:
+// firebase deploy --only firestore:rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── دالة مساعدة: هل المستخدم أدمن؟
+    function isAdmin() {
+      return request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    // ── دالة مساعدة: هل المستخدم مسجّل دخول؟
+    function isLoggedIn() {
+      return request.auth != null;
+    }
+
+    // ── دالة مساعدة: هل هو صاحب القصة؟
+    function isOwner(storyData) {
+      return request.auth.uid == storyData.authorUid;
+    }
+
+    // STORIES
+    match /stories/{storyId} {
+      // الكل يقدر يقرأ (زوار + مستخدمين)
+      allow read: if true;
+
+      // إنشاء: مسجّل دخول فقط + authorUid يساوي uid الحقيقي
+      allow create: if isLoggedIn()
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.content is string
+        && request.resource.data.content.size() > 0;
+
+      // تعديل: صاحب القصة فقط أو الأدمن
+      allow update: if isLoggedIn()
+        && (isOwner(resource.data) || isAdmin())
+        // لا يسمح بتغيير authorUid
+        && (!("authorUid" in request.resource.data)
+            || request.resource.data.authorUid == resource.data.authorUid);
+
+      // حذف: صاحب القصة أو الأدمن
+      allow delete: if isLoggedIn()
+        && (isOwner(resource.data) || isAdmin());
+    }
+
+    // USERS
+    match /users/{userId} {
+      // المستخدم يقرأ بياناته فقط — الأدمن يقرأ الكل
+      allow read: if request.auth.uid == userId || isAdmin();
+
+      // إنشاء: المستخدم ينشئ سجله فقط لنفسه
+      allow create: if request.auth.uid == userId
+        // يُضبط دور "user" فقط — لا يقدر يعيّن نفسه أدمن
+        && request.resource.data.role == "user";
+
+      // تعديل: المستخدم يعدّل بياناته — لكن لا يغيّر الدور
+      // الأدمن يقدر يغيّر كل شيء
+      allow update: if isAdmin()
+        || (request.auth.uid == userId
+            && request.resource.data.role == resource.data.role);
+
+      // حذف: الأدمن فقط
+      allow delete: if isAdmin();
+    }
+  }
+}
