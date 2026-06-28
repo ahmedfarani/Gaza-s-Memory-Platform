@@ -1,7 +1,5 @@
-// ================================================================
 // firebase-config.js
 // ملف الإعداد المشترك — يُحمَّل في كل صفحة قبل أي script آخر
-// ================================================================
 
 const firebaseConfig = {
   apiKey: "AIzaSyBrgF29WN56mMRwHWV7Ysu8jjTw3HFALSc",
@@ -20,10 +18,8 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// ================================================================
 // HELPER — getRole
 // يجلب دور المستخدم من Firestore (يُستخدم في أكثر من صفحة)
-// ================================================================
 async function getUserRole(uid) {
   try {
     const doc = await db.collection("users").doc(uid).get();
