@@ -4,7 +4,7 @@
   <base href="../Gaza-s-Memory-Platform/" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول — ذاكرة غزة</title>
+    <title>تسجيل — ذاكرة غزة</title>
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,45 +26,12 @@
         <span class="auth-logo__title">ذاكرة غزة</span>
       </div>
 
-      <!-- تبديل تسجيل دخول / إنشاء حساب -->
       <div class="auth-tabs">
-        <button class="auth-tab auth-tab--active" id="tabLogin" onclick="switchTab('login')">تسجيل الدخول</button>
         <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">إنشاء حساب</button>
       </div>
 
-      <!-- ===== نموذج تسجيل الدخول ===== -->
-      <div class="auth-panel" id="panelLogin">
-        <h1 class="auth-title">أهلاً بعودتك</h1>
-        <p class="auth-sub">سجّل دخولك لتشارك قصتك وتدير قصصك السابقة.</p>
-
-        <div id="loginError" class="auth-alert auth-alert--error" style="display:none"></div>
-
-        <div class="form-group">
-          <label class="form-label">البريد الإلكتروني</label>
-          <input type="email" id="loginEmail" class="form-input" placeholder="example@mail.com" dir="ltr" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">كلمة المرور</label>
-          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" dir="ltr" />
-        </div>
-
-        <button class="btn btn--submit" id="loginBtn" onclick="handleLogin()">
-          <span class="btn__text">دخول</span>
-          <span class="btn__loader" style="display:none">جارٍ التحقق...</span>
-        </button>
-
-        <p class="auth-switch">ما عندك حساب؟ <a href="auth.html" onclick="switchTab('register')">أنشئ حساباً جديداً</a></p>
-
-        <!-- زر متابعة كزائر -->
-        <div class="auth-guest-sep"><span>أو</span></div>
-        <a href="../index.html" class="btn btn--ghost btn--full auth-guest-btn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          متابعة كزائر (قراءة فقط)
-        </a>
-      </div>
-
-      <!-- ===== نموذج إنشاء حساب ===== -->
-      <div class="auth-panel" id="panelRegister" style="display:none">
+<!-- ===== نموذج إنشاء حساب ===== -->
+      <div class="auth-panel" id="panelRegister">
         <h1 class="auth-title">انضم إلى الذاكرة</h1>
         <p class="auth-sub">أنشئ حسابك وشارك قصتك مع العالم.</p>
 
@@ -95,10 +62,10 @@
           <span class="btn__loader" style="display:none">جارٍ الإنشاء...</span>
         </button>
 
-        <p class="auth-switch">عندك حساب؟ <a href="auth.html" onclick="switchTab('login')">سجّل دخولك</a></p>
+        <p class="auth-switch">عندك حساب؟ <a href="login.html" onclick="switchTab('login')">سجّل دخولك</a></p>
 
         <div class="auth-guest-sep"><span>أو</span></div>
-        <a href="index.html" class="btn btn--ghost btn--full auth-guest-btn">
+        <a href="../index.html" class="btn btn--ghost btn--full auth-guest-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           متابعة كزائر (قراءة فقط)
         </a>
