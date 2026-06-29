@@ -1376,6 +1376,15 @@ body {
   padding: 44px 36px;
   box-shadow: var(--shadow-modal);
 }
+
+.auth-container .form-group {
+  margin-bottom: 22px;
+}
+
+.auth-container .btn--submit {
+  margin-top: 8px;
+}
+
 .auth-logo {
   display: flex;
   align-items: center;
