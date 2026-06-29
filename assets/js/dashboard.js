@@ -50,6 +50,7 @@ async function initDashboard() {
 
   await Promise.all([loadAllStories(), loadMyStories()]);
   bindDashEvents();
+  renderOverview();
 }
 
 // DATA LOADING
