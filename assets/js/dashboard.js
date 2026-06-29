@@ -12,7 +12,7 @@ let deleteStoryId = null;
 // ── حماية الصفحة: إذا ما في مستخدم مسجّل → auth
 auth.onAuthStateChanged(async (user) => {
   if (!user) {
-    window.location.replace("auth.html");
+    window.location.replace("login.html");
     return;
   }
 
@@ -45,7 +45,7 @@ async function initDashboard() {
   // زر خروج
   document.getElementById("navLogoutBtn").addEventListener("click", async () => {
     await auth.signOut();
-    window.location.replace("auth.html");
+    window.location.replace("login.html");
   });
 
   await Promise.all([loadAllStories(), loadMyStories()]);
