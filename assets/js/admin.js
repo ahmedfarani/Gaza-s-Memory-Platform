@@ -9,7 +9,7 @@ let deleteUserId = null;
 // ── حماية: فقط الأدمن يدخل هذه الصفحة
 auth.onAuthStateChanged(async (user) => {
   if (!user) {
-    window.location.replace("auth.html");
+    window.location.replace("login.html");
     return;
   }
 
@@ -32,7 +32,7 @@ auth.onAuthStateChanged(async (user) => {
     .getElementById("navLogoutBtn")
     .addEventListener("click", async () => {
       await auth.signOut();
-      window.location.replace("auth.html");
+      window.location.replace("login.html");
     });
 
   await Promise.all([loadAllStories(), loadAllUsers()]);
