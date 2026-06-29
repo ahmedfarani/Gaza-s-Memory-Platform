@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إنشاء حساب — ذاكرة غزة</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+</head>
+<body class="auth-page">
+
+  <a href="../index.html" class="auth-back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    العودة للرئيسية
+  </a>
+
+  <div class="auth-container">
+    <div class="auth-logo">
+      <span class="auth-logo__symbol">☽</span>
+      <span class="auth-logo__title">ذاكرة غزة</span>
+    </div>
+
+    <div id="registerError" class="auth-alert auth-alert--error" style="display:none"></div>
+    <div id="registerSuccess" class="auth-alert auth-alert--success" style="display:none">
+      تم إنشاء حسابك بنجاح! جارٍ تحويلك لتسجيل الدخول...
+    </div>
+
+    <h1 class="auth-title">انضم إلى الذاكرة</h1>
+    <p class="auth-sub">أنشئ حسابك وشارك قصتك مع العالم.</p>
+
+    <div class="form-group">
+      <label class="form-label">الاسم الكامل</label>
+      <input type="text" id="regName" class="form-input" placeholder="اسمك الكامل أو اسم مستعار" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">البريد الإلكتروني</label>
+      <input type="email" id="regEmail" class="form-input" placeholder="example@mail.com" dir="ltr" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">كلمة المرور</label>
+      <input type="password" id="regPassword" class="form-input" placeholder="8 أحرف على الأقل" dir="ltr" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">تأكيد كلمة المرور</label>
+      <input type="password" id="regPasswordConfirm" class="form-input" placeholder="أعد كتابة كلمة المرور" dir="ltr" />
+    </div>
+
+    <button class="btn btn--submit" id="registerBtn" onclick="handleRegister()">
+      <span class="btn__text">إنشاء الحساب</span>
+      <span class="btn__loader" style="display:none">جارٍ الإنشاء...</span>
+    </button>
+
+    <p class="auth-switch">عندك حساب؟ <a href="login.html">سجّل دخولك</a></p>
+
+    <div class="auth-guest-sep"><span>أو</span></div>
+    <a href="../index.html" class="btn btn--ghost btn--full auth-guest-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      متابعة كزائر (قراءة فقط)
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="../assets/js/firebase-config.js"></script>
+  <script src="../assets/js/register.js"></script>
+</body>
+</html>
