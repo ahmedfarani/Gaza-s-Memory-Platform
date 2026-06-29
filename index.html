@@ -1,179 +1,249 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ذاكرة غزة — قصصنا تبقى</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ذاكرة غزة — قصصنا تبقى</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- ===== NAV ===== -->
-  <nav class="nav">
-    <div class="nav__logo">
-      <span class="nav__symbol">☽</span>
-      <span class="nav__title">ذاكرة غزة</span>
-    </div>
-    <div class="nav__links">
-      <a href="#stories" class="nav__link">القصص</a>
-      <!-- زائر -->
-      <a href="pages/login.html" class="nav__link nav__link--ghost nav__guest-only">تسجيل الدخول</a>
-      <!-- مسجّل -->
-      <div class="nav__user-area nav__auth-only" style="display:none">
-        <span class="nav__welcome">أهلاً، <span id="navUserName">—</span></span>
-        <a href="dashboard.html" class="nav__link nav__link--cta">لوحتي</a>
-        <button class="nav__link nav__link--logout" id="navLogoutBtn">خروج</button>
+    <nav class="nav">
+      <div class="nav__logo">
+        <span class="nav__symbol">☽</span>
+        <span class="nav__title">ذاكرة غزة</span>
       </div>
-      <a href="#storiesCta" class="nav__link nav__link--cta nav__guest-only">شارك قصتك</a>
-    </div>
-  </nav>
+      <div class="nav__links">
+        <a href="#stories" class="nav__link">القصص</a>
+        <!-- زائر -->
+        <a
+          href="pages/login.html"
+          class="nav__link nav__link--ghost nav__guest-only"
+          >تسجيل الدخول</a
+        >
+        <!-- مسجّل -->
+        <div class="nav__user-area nav__auth-only" style="display: none">
+          <span class="nav__welcome"
+            >أهلاً، <span id="navUserName">—</span></span
+          >
+          <a href="dashboard.html" class="nav__link nav__link--cta">لوحتي</a>
+          <button class="nav__link nav__link--logout" id="navLogoutBtn">
+            خروج
+          </button>
+        </div>
+        <a href="#storiesCta" class="nav__link nav__link--cta nav__guest-only"
+          >شارك قصتك</a
+        >
+      </div>
+    </nav>
 
     <!-- ===== HERO ===== -->
-  <header class="hero">
-    <div class="hero__noise"></div>
-    <div class="hero__grid"></div>
-    <div class="hero__content">
-      <p class="hero__eyebrow">منصة الذاكرة الحية</p>
-      <h1 class="hero__headline">
-        <span class="hero__line">قصصنا</span>
-        <span class="hero__line hero__line--accent">تبقى</span>
-      </h1>
-      <p class="hero__sub">مكان لأهل غزة يتكلموا فيه عن ذكرياتهم وحياتهم — لأن كل قصة تستاهل تتذكّر.</p>
-      <div class="hero__actions">
-        <a href="#stories" class="btn btn--primary"><span>اقرأ القصص</span></a>
-        <a href="#storiesCta" class="btn btn--ghost nav__guest-only">شارك قصتك</a>
-        <a href="dashboard.html" class="btn btn--ghost nav__auth-only" style="display:none">أضف قصة جديدة</a>
+    <header class="hero">
+      <div class="hero__noise"></div>
+      <div class="hero__grid"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">منصة الذاكرة الحية</p>
+        <h1 class="hero__headline">
+          <span class="hero__line">قصصنا</span>
+          <span class="hero__line hero__line--accent">تبقى</span>
+        </h1>
+        <p class="hero__sub">
+          مكان لأهل غزة يتكلموا فيه عن ذكرياتهم وحياتهم — لأن كل قصة تستاهل
+          تتذكّر.
+        </p>
+        <div class="hero__actions">
+          <a href="#stories" class="btn btn--primary"
+            ><span>اقرأ القصص</span></a
+          >
+          <a href="#storiesCta" class="btn btn--ghost nav__guest-only"
+            >شارك قصتك</a
+          >
+          <a
+            href="dashboard.html"
+            class="btn btn--ghost nav__auth-only"
+            style="display: none"
+            >أضف قصة جديدة</a
+          >
+        </div>
       </div>
-    </div>
-    <div class="hero__scroll"><span>↓</span></div>
-    <div class="hero__stats">
-      <div class="stat">
-        <span class="stat__num" id="storyCount">0</span>
-        <span class="stat__label">قصة مشاركة</span>
+      <div class="hero__scroll"><span>↓</span></div>
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__num" id="storyCount">0</span>
+          <span class="stat__label">قصة مشاركة</span>
+        </div>
+        <div class="stat__divider"></div>
+        <div class="stat">
+          <span class="stat__num">∞</span>
+          <span class="stat__label">ذكرى محفوظة</span>
+        </div>
       </div>
-      <div class="stat__divider"></div>
-      <div class="stat">
-        <span class="stat__num">∞</span>
-        <span class="stat__label">ذكرى محفوظة</span>
-      </div>
-    </div>
-  </header>
+    </header>
 
     <!-- ===== STORIES ===== -->
-  <section class="section stories-section" id="stories">
-    <div class="section__inner">
-      <div class="section__header">
-        <p class="section__label">الأرشيف الحي</p>
-        <h2 class="section__title">القصص المشاركة</h2>
-        <div class="section__line"></div>
+    <section class="section stories-section" id="stories">
+      <div class="section__inner">
+        <div class="section__header">
+          <p class="section__label">الأرشيف الحي</p>
+          <h2 class="section__title">القصص المشاركة</h2>
+          <div class="section__line"></div>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn filter-btn--active" data-filter="all">
+            الكل
+          </button>
+          <button class="filter-btn" data-filter="ذكرى">ذكريات</button>
+          <button class="filter-btn" data-filter="عائلة">عائلة</button>
+          <button class="filter-btn" data-filter="حب">حب وأمل</button>
+          <button class="filter-btn" data-filter="صمود">صمود</button>
+        </div>
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="ابحث في القصص..."
+          />
+          <svg
+            class="search-icon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </div>
+        <div class="stories-grid" id="storiesGrid"></div>
+        <div class="empty-state" id="emptyState" style="display: none">
+          <div class="empty-state__icon">📜</div>
+          <h3>لا توجد قصص بعد</h3>
+          <p>كن أول من يشارك قصته من غزة</p>
+        </div>
+        <div class="stories-cta nav__guest-only" id="storiesCta">
+          <p>هل عندك قصة تريد مشاركتها؟</p>
+          <a href="pages/login.html" class="btn btn--primary"
+            >سجّل دخولك وشارك قصتك</a
+          >
+        </div>
       </div>
-      <div class="filter-bar">
-        <button class="filter-btn filter-btn--active" data-filter="all">الكل</button>
-        <button class="filter-btn" data-filter="ذكرى">ذكريات</button>
-        <button class="filter-btn" data-filter="عائلة">عائلة</button>
-        <button class="filter-btn" data-filter="حب">حب وأمل</button>
-        <button class="filter-btn" data-filter="صمود">صمود</button>
-      </div>
-      <div class="search-wrap">
-        <input type="text" id="searchInput" class="search-input" placeholder="ابحث في القصص..." />
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-      </div>
-      <div class="stories-grid" id="storiesGrid"></div>
-      <div class="empty-state" id="emptyState" style="display:none">
-        <div class="empty-state__icon">📜</div>
-        <h3>لا توجد قصص بعد</h3>
-        <p>كن أول من يشارك قصته من غزة</p>
-      </div>
-      <div class="stories-cta nav__guest-only" id="storiesCta">
-        <p>هل عندك قصة تريد مشاركتها؟</p>
-        <a href="pages/login.html" class="btn btn--primary">سجّل دخولك وشارك قصتك</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-        <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__grid">
-        <div class="footer__col footer__col--about">
-          <div class="footer__logo">
-            <span class="footer__symbol">☽</span>
-            <span class="footer__title-ar">ذاكرة غزة</span>
-          </div>
-          <p class="footer__description">منصة رقمية مستقلة توثق قصص الصمود والحياة في غزة.</p>
-          <div class="footer__signature">
-            <span class="footer__signature-label">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              بأيدي المهندسين:
-            </span>
-            <div class="footer__badge-wrapper">
-              <span class="footer__dev-badge">أحمد الفراني</span>
-              <span class="footer__badge-separator">✕</span>
-              <span class="footer__dev-badge">هادي أبو عيشة</span>
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__grid">
+          <div class="footer__col footer__col--about">
+            <div class="footer__logo">
+              <span class="footer__symbol">☽</span>
+              <span class="footer__title-ar">ذاكرة غزة</span>
             </div>
+            <p class="footer__description">
+              منصة رقمية مستقلة توثق قصص الصمود والحياة في غزة.
+            </p>
+            <div class="footer__signature">
+              <span class="footer__signature-label">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                بأيدي المهندسين:
+              </span>
+              <div class="footer__badge-wrapper">
+                <span class="footer__dev-badge">أحمد الفراني</span>
+                <span class="footer__badge-separator">✕</span>
+                <span class="footer__dev-badge">هادي أبو عيشة</span>
+              </div>
+            </div>
+            <a href="#" class="footer__back-to-top">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M18 15l-6-6-6 6" />
+              </svg>
+              <span>إلى الأعلى</span>
+            </a>
           </div>
-          <a href="#" class="footer__back-to-top">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
-            <span>إلى الأعلى</span>
-          </a>
+          <div class="footer__col">
+            <h4 class="footer__col-title">خريطة الموقع</h4>
+            <ul class="footer__links">
+              <li><a href="index.html" class="footer__link">الرئيسية</a></li>
+              <li><a href="#stories" class="footer__link">أرشيف القصص</a></li>
+              <li><a href="login.html" class="footer__link">شارك قصتك</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4 class="footer__col-title">الخصوصية والشروط</h4>
+            <ul class="footer__links">
+              <li><span class="footer__link">سياسة الخصوصية</span></li>
+              <li><span class="footer__link">شروط الخدمة</span></li>
+              <li><span class="footer__link">اتصل بنا</span></li>
+            </ul>
+          </div>
         </div>
-        <div class="footer__col">
-          <h4 class="footer__col-title">خريطة الموقع</h4>
-          <ul class="footer__links">
-            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
-            <li><a href="#stories" class="footer__link">أرشيف القصص</a></li>
-            <li><a href="login.html" class="footer__link">شارك قصتك</a></li>
-          </ul>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">
+          جميع الحقوق محفوظة © 2026. ذاكرة غزة. لن ننسى.
+        </p>
+      </div>
+    </footer>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal" id="storyModal">
+        <button class="modal__close" id="modalClose">✕</button>
+        <div class="modal__tag" id="modalTag"></div>
+        <h2 class="modal__title" id="modalTitle"></h2>
+        <div class="modal__meta">
+          <span id="modalAuthor"></span><span class="modal__dot">•</span>
+          <span id="modalLocation"></span><span class="modal__dot">•</span>
+          <span id="modalDate"></span>
         </div>
-        <div class="footer__col">
-          <h4 class="footer__col-title">الخصوصية والشروط</h4>
-          <ul class="footer__links">
-            <li><span class="footer__link">سياسة الخصوصية</span></li>
-            <li><span class="footer__link">شروط الخدمة</span></li>
-            <li><span class="footer__link">اتصل بنا</span></li>
-          </ul>
+        <div class="modal__divider"></div>
+        <div class="modal__body" id="modalBody"></div>
+        <div class="modal__actions">
+          <button class="btn btn--ghost btn--small" id="modalCopyBtn">
+            نسخ القصة
+          </button>
         </div>
       </div>
     </div>
-    <div class="footer__bottom">
-      <p class="footer__copy">جميع الحقوق محفوظة © 2026. ذاكرة غزة. لن ننسى.</p>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+      <span class="toast__icon">✓</span>
+      <span id="toastMsg">تم!</span>
     </div>
-  </footer>
 
-        <!-- ===== MODAL ===== -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="storyModal">
-      <button class="modal__close" id="modalClose">✕</button>
-      <div class="modal__tag" id="modalTag"></div>
-      <h2 class="modal__title" id="modalTitle"></h2>
-      <div class="modal__meta">
-        <span id="modalAuthor"></span><span class="modal__dot">•</span>
-        <span id="modalLocation"></span><span class="modal__dot">•</span>
-        <span id="modalDate"></span>
-      </div>
-      <div class="modal__divider"></div>
-      <div class="modal__body" id="modalBody"></div>
-      <div class="modal__actions">
-        <button class="btn btn--ghost btn--small" id="modalCopyBtn">نسخ القصة</button>
-      </div>
-    </div>
-  </div>
-
-        <!-- ===== TOAST ===== -->
-  <div class="toast" id="toast">
-    <span class="toast__icon">✓</span>
-    <span id="toastMsg">تم!</span>
-  </div>
-
-        <!-- ===== FIREBASE ===== -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="script.js"></script>
-</body>
+    <!-- ===== FIREBASE ===== -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>
