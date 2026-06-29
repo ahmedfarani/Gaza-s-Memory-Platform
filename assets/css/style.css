@@ -53,6 +53,21 @@ body {
   direction: rtl;
   overflow-x: hidden;
   line-height: 1.7;
+  margin: 0;
+  padding: 0;
+}
+
+/* auth pages: body IS the flex container */
+body.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(196,96,58,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(122,140,62,0.08) 0%, transparent 60%),
+    var(--bg-dark);
+  padding: 60px 20px 40px;
 }
 
 ::-webkit-scrollbar {
@@ -1260,7 +1275,7 @@ body {
   }
 }
 /* ================================================================
-   NEW ADDITIONS — Auth, Dashboard, Admin
+   NEW ADDITIONS — Login, Register, Dashboard, Admin
    ================================================================ */
 
 /* ── NAV additions ── */
@@ -1331,25 +1346,7 @@ body {
 }
 
 /* ── AUTH PAGE ── */
-.auth-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(
-      ellipse 80% 60% at 20% 80%,
-      rgba(196, 96, 58, 0.1) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 60% 40% at 80% 20%,
-      rgba(122, 140, 62, 0.08) 0%,
-      transparent 60%
-    ),
-    var(--bg-dark);
-  padding: 40px 20px;
-}
+/* auth-page styles moved to body.auth-page above */
 .auth-back-link {
   position: fixed;
   top: 24px;
