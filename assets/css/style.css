@@ -1873,3 +1873,68 @@ body {
     align-self: flex-end;
   }
 }
+
+/* ════════════════════════════════════════════════════════════
+   قائمة الهامبرغر للشاشات الصغيرة
+   ════════════════════════════════════════════════════════════ */
+
+/* إخفاء زر الهامبرغر افتراضياً على شاشات الكمبيوتر */
+.hamburger-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+}
+
+.hamburger-toggle:hover {
+  background: rgba(212, 168, 56, 0.1);
+}
+
+/* التجاوب مع الجوالات (شاشات أصغر من 768 بكسل) */
+@media (max-width: 768px) {
+  /* إظهار زر الهامبرغر */
+  .hamburger-toggle {
+    display: block;
+  }
+
+  /* تحويل قائمة الروابط العلوية إلى قائمة منسدلة تحت الهيدر */
+  .nav__links {
+    display: none; /* إخفاء افتراضي */
+    position: absolute;
+    top: 70px; /* يظهر مباشرة أسفل شريط التنقل */
+    left: 16px;
+    right: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+
+  /* عند الضغط على الهامبرغر وإضافة كلاس active يتم إظهار القائمة */
+  .nav__links.active {
+    display: flex;
+  }
+
+  /* جعل الأزرار والنصوص تأخذ العرض الكامل داخل القائمة المنسدلة */
+  .nav__links .nav__link,
+  .nav__links .btn,
+  .nav__links .header__actions {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .nav__links .header__actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

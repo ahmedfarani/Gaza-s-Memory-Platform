@@ -58,7 +58,7 @@ async function loadAllUsers() {
   document.getElementById("statTotalUsers").textContent = allUsers.length;
 }
 
-// 
+//
 // VIEWS
 function showAdminView(view) {
   // إخفاء/إظهار الـ views

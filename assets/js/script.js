@@ -11,31 +11,35 @@ let searchQuery = "";
 
 // DOM refs
 const storiesGrid = document.getElementById("storiesGrid");
-const emptyState  = document.getElementById("emptyState");
-const storyCount  = document.getElementById("storyCount");
+const emptyState = document.getElementById("emptyState");
+const storyCount = document.getElementById("storyCount");
 const searchInput = document.getElementById("searchInput");
 const modalOverlay = document.getElementById("modalOverlay");
-const modalClose   = document.getElementById("modalClose");
-const toast        = document.getElementById("toast");
-const toastMsg     = document.getElementById("toastMsg");
+const modalClose = document.getElementById("modalClose");
+const toast = document.getElementById("toast");
+const toastMsg = document.getElementById("toastMsg");
 
 // AUTH STATE — ضبط الـ NAV حسب حالة الدخول
 auth.onAuthStateChanged(async (user) => {
   const guestEls = document.querySelectorAll(".nav__guest-only");
-  const authEls  = document.querySelectorAll(".nav__auth-only");
+  const authEls = document.querySelectorAll(".nav__auth-only");
 
   if (user) {
     // مستخدم مسجّل
-    guestEls.forEach(el => el.style.display = "none");
-    authEls.forEach(el  => el.style.display = "");
+    guestEls.forEach((el) => (el.style.display = "none"));
+    authEls.forEach((el) => (el.style.display = ""));
 
     // اسمه في الـ nav
     const nameEl = document.getElementById("navUserName");
     if (nameEl) {
       try {
         const doc = await db.collection("users").doc(user.uid).get();
-        nameEl.textContent = doc.exists ? (doc.data().name || user.email) : user.email;
-      } catch(_) { nameEl.textContent = user.email; }
+        nameEl.textContent = doc.exists
+          ? doc.data().name || user.email
+          : user.email;
+      } catch (_) {
+        nameEl.textContent = user.email;
+      }
     }
 
     // زر خروج
@@ -46,11 +50,10 @@ auth.onAuthStateChanged(async (user) => {
         window.location.reload();
       });
     }
-
   } else {
     // زائر
-    guestEls.forEach(el => el.style.display = "");
-    authEls.forEach(el  => el.style.display = "none");
+    guestEls.forEach((el) => (el.style.display = ""));
+    authEls.forEach((el) => (el.style.display = "none"));
   }
 });
 
@@ -67,12 +70,11 @@ async function init() {
   bindEvents();
 }
 
-
 // FIRESTORE FETCH
 async function apiFetchStories() {
   const snapshot = await db.collection("stories").get();
   const result = [];
-  snapshot.forEach(doc => result.push({ id: doc.id, ...doc.data() }));
+  snapshot.forEach((doc) => result.push({ id: doc.id, ...doc.data() }));
   return result;
 }
 
@@ -82,14 +84,14 @@ function updateCount() {
 
 function getFilteredStories() {
   return stories
-    .filter(s => {
+    .filter((s) => {
       if (activeFilter !== "all" && s.tag !== activeFilter) return false;
       if (searchQuery) {
         const q = searchQuery.toLowerCase();
         return (
           s.title.toLowerCase().includes(q) ||
           s.content.toLowerCase().includes(q) ||
-          (s.author   || "").toLowerCase().includes(q) ||
+          (s.author || "").toLowerCase().includes(q) ||
           (s.location || "").toLowerCase().includes(q)
         );
       }
@@ -111,18 +113,23 @@ function renderStories() {
 }
 
 function buildCard(story, index) {
-  const card    = document.createElement("div");
+  const card = document.createElement("div");
   card.className = "story-card";
   card.style.animationDelay = `${index * 0.06}s`;
 
-  const excerpt = story.content.length > 160
-    ? story.content.slice(0, 160) + "…"
-    : story.content;
+  const excerpt =
+    story.content.length > 160
+      ? story.content.slice(0, 160) + "…"
+      : story.content;
 
-  const author   = story.author   || "مجهول";
+  const author = story.author || "مجهول";
   const location = story.location || "غزة";
-  const date     = story.date
-    ? new Date(story.date).toLocaleDateString("ar-PS", { year:"numeric", month:"long", day:"numeric" })
+  const date = story.date
+    ? new Date(story.date).toLocaleDateString("ar-PS", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
     : "";
 
   card.innerHTML = `
@@ -146,24 +153,31 @@ function buildCard(story, index) {
 
 function openModal(story) {
   const date = story.date
-    ? new Date(story.date).toLocaleDateString("ar-PS", { year:"numeric", month:"long", day:"numeric" })
+    ? new Date(story.date).toLocaleDateString("ar-PS", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
     : "غير محدد";
 
   document.getElementById("modalTag").innerHTML =
     `<span class="story-card__tag tag--${story.tag}">${story.tag}</span>`;
-  document.getElementById("modalTitle").textContent    = story.title;
-  document.getElementById("modalAuthor").textContent   = story.author   || "مجهول";
-  document.getElementById("modalLocation").textContent = story.location || "غزة";
-  document.getElementById("modalDate").textContent     = date;
-  document.getElementById("modalBody").textContent     = story.content;
+  document.getElementById("modalTitle").textContent = story.title;
+  document.getElementById("modalAuthor").textContent = story.author || "مجهول";
+  document.getElementById("modalLocation").textContent =
+    story.location || "غزة";
+  document.getElementById("modalDate").textContent = date;
+  document.getElementById("modalBody").textContent = story.content;
 
   modalOverlay.classList.add("active");
   document.body.style.overflow = "hidden";
 
   document.getElementById("modalCopyBtn").onclick = () => {
-    navigator.clipboard.writeText(
-      `${story.title}\n\n${story.content}\n\n— ${story.author || "مجهول"}, ${story.location || "غزة"}`
-    ).then(() => showToast("تم نسخ القصة ✓"));
+    navigator.clipboard
+      .writeText(
+        `${story.title}\n\n${story.content}\n\n— ${story.author || "مجهول"}, ${story.location || "غزة"}`,
+      )
+      .then(() => showToast("تم نسخ القصة ✓"));
   };
 }
 
@@ -183,8 +197,10 @@ function showToast(msg, isInfo = false) {
 
 function escHtml(str) {
   return String(str)
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function bindEvents() {
@@ -199,10 +215,11 @@ function bindEvents() {
   });
 
   // فلاتر
-  document.querySelectorAll(".filter-btn").forEach(btn => {
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter-btn")
-        .forEach(b => b.classList.remove("filter-btn--active"));
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("filter-btn--active"));
       btn.classList.add("filter-btn--active");
       activeFilter = btn.dataset.filter;
       renderStories();
@@ -211,14 +228,22 @@ function bindEvents() {
 
   // مودال
   modalClose.addEventListener("click", closeModal);
-  modalOverlay.addEventListener("click", e => { if (e.target === modalOverlay) closeModal(); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
 
   // nav shadow on scroll
-  window.addEventListener("scroll", () => {
-    document.querySelector(".nav").style.boxShadow =
-      window.scrollY > 10 ? "0 4px 24px rgba(0,0,0,0.5)" : "none";
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      document.querySelector(".nav").style.boxShadow =
+        window.scrollY > 10 ? "0 4px 24px rgba(0,0,0,0.5)" : "none";
+    },
+    { passive: true },
+  );
 }
 
 document.addEventListener("DOMContentLoaded", init);

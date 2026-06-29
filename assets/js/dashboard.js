@@ -3,10 +3,10 @@
 
 const MAX_CHARS = 3000;
 
-let currentUser   = null;
-let allStories    = [];
-let myStories     = [];
-let activeFilter  = "all";
+let currentUser = null;
+let allStories = [];
+let myStories = [];
+let activeFilter = "all";
 let deleteStoryId = null;
 
 // ── حماية الصفحة: إذا ما في مستخدم مسجّل → auth
@@ -32,10 +32,12 @@ async function initDashboard() {
   // اسم المستخدم
   try {
     const doc = await db.collection("users").doc(currentUser.uid).get();
-    const name = doc.exists ? (doc.data().name || currentUser.email) : currentUser.email;
+    const name = doc.exists
+      ? doc.data().name || currentUser.email
+      : currentUser.email;
 
-    document.getElementById("navUserName").textContent      = name;
-    document.getElementById("sidebarUserName").textContent  = name;
+    document.getElementById("navUserName").textContent = name;
+    document.getElementById("sidebarUserName").textContent = name;
     document.getElementById("sidebarUserEmail").textContent = currentUser.email;
 
     const initial = name.charAt(0).toUpperCase();
@@ -43,10 +45,12 @@ async function initDashboard() {
   } catch (_) {}
 
   // زر خروج
-  document.getElementById("navLogoutBtn").addEventListener("click", async () => {
-    await auth.signOut();
-    window.location.replace("login.html");
-  });
+  document
+    .getElementById("navLogoutBtn")
+    .addEventListener("click", async () => {
+      await auth.signOut();
+      window.location.replace("login.html");
+    });
 
   await Promise.all([loadAllStories(), loadMyStories()]);
   bindDashEvents();
@@ -58,7 +62,7 @@ async function loadAllStories() {
   try {
     const snap = await db.collection("stories").get();
     allStories = [];
-    snap.forEach(d => allStories.push({ id: d.id, ...d.data() }));
+    snap.forEach((d) => allStories.push({ id: d.id, ...d.data() }));
     allStories.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     renderBrowse();
   } catch (err) {
@@ -68,11 +72,12 @@ async function loadAllStories() {
 
 async function loadMyStories() {
   try {
-    const snap = await db.collection("stories")
+    const snap = await db
+      .collection("stories")
       .where("authorUid", "==", currentUser.uid)
       .get();
     myStories = [];
-    snap.forEach(d => myStories.push({ id: d.id, ...d.data() }));
+    snap.forEach((d) => myStories.push({ id: d.id, ...d.data() }));
     myStories.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     renderMyStories();
   } catch (err) {
@@ -83,20 +88,26 @@ async function loadMyStories() {
 // VIEWS
 function showView(view) {
   // إخفاء/إظهار الـ views
-  ["browse","mystories","write"].forEach(v => {
-    const el = document.getElementById("view" + v.charAt(0).toUpperCase() + v.slice(1));
+  ["browse", "mystories", "write"].forEach((v) => {
+    const el = document.getElementById(
+      "view" + v.charAt(0).toUpperCase() + v.slice(1),
+    );
     if (el) el.style.display = v === view ? "" : "none";
   });
 
   // السايدبار — desktop
   const sidebarItems = document.querySelectorAll(".dash-nav__item");
-  const viewOrder = ["browse","mystories","write"];
+  const viewOrder = ["browse", "mystories", "write"];
   sidebarItems.forEach((btn, i) => {
     btn.classList.toggle("dash-nav__item--active", viewOrder[i] === view);
   });
 
   // Bottom nav — mobile
-  const mbnMap = { browse: "mbn-browse", mystories: "mbn-mystories", write: "mbn-write" };
+  const mbnMap = {
+    browse: "mbn-browse",
+    mystories: "mbn-mystories",
+    write: "mbn-write",
+  };
   Object.entries(mbnMap).forEach(([v, id]) => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle("mobile-bottom-nav__item--active", v === view);
@@ -105,22 +116,24 @@ function showView(view) {
 
 // BROWSE
 function renderBrowse() {
-  const searchVal = (document.getElementById("dashSearch")?.value || "").trim().toLowerCase();
+  const searchVal = (document.getElementById("dashSearch")?.value || "")
+    .trim()
+    .toLowerCase();
 
-  const filtered = allStories.filter(s => {
+  const filtered = allStories.filter((s) => {
     if (activeFilter !== "all" && s.tag !== activeFilter) return false;
     if (searchVal) {
       return (
         s.title.toLowerCase().includes(searchVal) ||
         s.content.toLowerCase().includes(searchVal) ||
-        (s.author   || "").toLowerCase().includes(searchVal) ||
+        (s.author || "").toLowerCase().includes(searchVal) ||
         (s.location || "").toLowerCase().includes(searchVal)
       );
     }
     return true;
   });
 
-  const grid  = document.getElementById("dashStoriesGrid");
+  const grid = document.getElementById("dashStoriesGrid");
   const empty = document.getElementById("dashEmptyBrowse");
   grid.innerHTML = "";
 
@@ -137,9 +150,10 @@ function buildBrowseCard(story, index) {
   card.className = "story-card";
   card.style.animationDelay = `${index * 0.05}s`;
 
-  const excerpt = story.content.length > 150
-    ? story.content.slice(0, 150) + "…"
-    : story.content;
+  const excerpt =
+    story.content.length > 150
+      ? story.content.slice(0, 150) + "…"
+      : story.content;
 
   card.innerHTML = `
     <div class="story-card__tag tag--${story.tag}">${story.tag}</div>
@@ -159,7 +173,7 @@ function buildBrowseCard(story, index) {
 
 // MY STORIES
 function renderMyStories() {
-  const grid  = document.getElementById("myStoriesGrid");
+  const grid = document.getElementById("myStoriesGrid");
   const empty = document.getElementById("dashEmptyMine");
   grid.innerHTML = "";
 
@@ -176,12 +190,16 @@ function buildMyCard(story, index) {
   card.className = "story-card story-card--mine";
   card.style.animationDelay = `${index * 0.05}s`;
 
-  const excerpt = story.content.length > 130
-    ? story.content.slice(0, 130) + "…"
-    : story.content;
+  const excerpt =
+    story.content.length > 130
+      ? story.content.slice(0, 130) + "…"
+      : story.content;
 
   const date = story.date
-    ? new Date(story.date).toLocaleDateString("ar-PS", { year:"numeric", month:"long" })
+    ? new Date(story.date).toLocaleDateString("ar-PS", {
+        year: "numeric",
+        month: "long",
+      })
     : "";
 
   card.innerHTML = `
@@ -217,27 +235,29 @@ function buildMyCard(story, index) {
 
 // WRITE / EDIT
 function startEdit(story) {
-  document.getElementById("editStoryId").value       = story.id;
-  document.getElementById("dAuthorName").value       = story.author   || "";
-  document.getElementById("dStoryLocation").value    = story.location || "";
-  document.getElementById("dStoryDate").value        = story.date     || "";
-  document.getElementById("dStoryTag").value         = story.tag      || "ذكرى";
-  document.getElementById("dStoryTitle").value       = story.title    || "";
-  document.getElementById("dStoryContent").value     = story.content  || "";
-  document.getElementById("dCharCount").textContent  = (story.content || "").length;
-  document.getElementById("dAgreeCheck").checked     = true;
+  document.getElementById("editStoryId").value = story.id;
+  document.getElementById("dAuthorName").value = story.author || "";
+  document.getElementById("dStoryLocation").value = story.location || "";
+  document.getElementById("dStoryDate").value = story.date || "";
+  document.getElementById("dStoryTag").value = story.tag || "ذكرى";
+  document.getElementById("dStoryTitle").value = story.title || "";
+  document.getElementById("dStoryContent").value = story.content || "";
+  document.getElementById("dCharCount").textContent = (
+    story.content || ""
+  ).length;
+  document.getElementById("dAgreeCheck").checked = true;
 
-  document.getElementById("writeFormTitle").textContent  = "تعديل القصة";
+  document.getElementById("writeFormTitle").textContent = "تعديل القصة";
   document.getElementById("dCancelEditBtn").style.display = "";
 
   showView("write");
 }
 
 function cancelEdit() {
-  document.getElementById("editStoryId").value       = "";
+  document.getElementById("editStoryId").value = "";
   document.getElementById("dashStoryForm").reset();
-  document.getElementById("dCharCount").textContent  = "0";
-  document.getElementById("writeFormTitle").textContent  = "قصة جديدة";
+  document.getElementById("dCharCount").textContent = "0";
+  document.getElementById("writeFormTitle").textContent = "قصة جديدة";
   document.getElementById("dCancelEditBtn").style.display = "none";
 }
 
@@ -249,18 +269,18 @@ async function handleStorySubmit(e) {
   const isEdit = !!editId;
 
   const storyData = {
-    title    : document.getElementById("dStoryTitle").value.trim(),
-    content  : document.getElementById("dStoryContent").value.trim(),
-    author   : document.getElementById("dAuthorName").value.trim(),
-    location : document.getElementById("dStoryLocation").value.trim(),
-    date     : document.getElementById("dStoryDate").value,
-    tag      : document.getElementById("dStoryTag").value,
+    title: document.getElementById("dStoryTitle").value.trim(),
+    content: document.getElementById("dStoryContent").value.trim(),
+    author: document.getElementById("dAuthorName").value.trim(),
+    location: document.getElementById("dStoryLocation").value.trim(),
+    date: document.getElementById("dStoryDate").value,
+    tag: document.getElementById("dStoryTag").value,
     authorUid: currentUser.uid,
   };
 
   const submitBtn = document.getElementById("dSubmitBtn");
   submitBtn.disabled = true;
-  submitBtn.querySelector(".btn__text").style.display   = "none";
+  submitBtn.querySelector(".btn__text").style.display = "none";
   submitBtn.querySelector(".btn__loader").style.display = "inline";
 
   try {
@@ -270,9 +290,9 @@ async function handleStorySubmit(e) {
       await db.collection("stories").doc(editId).update(storyData);
 
       // تحديث محلي
-      const idx = allStories.findIndex(s => s.id === editId);
+      const idx = allStories.findIndex((s) => s.id === editId);
       if (idx !== -1) allStories[idx] = { ...allStories[idx], ...storyData };
-      const mIdx = myStories.findIndex(s => s.id === editId);
+      const mIdx = myStories.findIndex((s) => s.id === editId);
       if (mIdx !== -1) myStories[mIdx] = { ...myStories[mIdx], ...storyData };
 
       showToast("تم تعديل القصة بنجاح ✓");
@@ -292,13 +312,12 @@ async function handleStorySubmit(e) {
     renderBrowse();
     renderMyStories();
     showView("mystories");
-
   } catch (err) {
     console.error(err);
     showToast("حدث خطأ، يرجى المحاولة لاحقاً.", true);
   } finally {
     submitBtn.disabled = false;
-    submitBtn.querySelector(".btn__text").style.display   = "inline";
+    submitBtn.querySelector(".btn__text").style.display = "inline";
     submitBtn.querySelector(".btn__loader").style.display = "none";
   }
 }
@@ -315,43 +334,52 @@ function closeDeleteModal() {
   document.body.style.overflow = "";
 }
 
-document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
-  if (!deleteStoryId) return;
-  try {
-    await db.collection("stories").doc(deleteStoryId).delete();
-    allStories = allStories.filter(s => s.id !== deleteStoryId);
-    myStories  = myStories.filter(s  => s.id !== deleteStoryId);
-    renderBrowse();
-    renderMyStories();
-    showToast("تم حذف القصة.");
-  } catch (err) {
-    showToast("فشل الحذف. حاول لاحقاً.", true);
-  } finally {
-    closeDeleteModal();
-  }
-});
+document
+  .getElementById("confirmDeleteBtn")
+  .addEventListener("click", async () => {
+    if (!deleteStoryId) return;
+    try {
+      await db.collection("stories").doc(deleteStoryId).delete();
+      allStories = allStories.filter((s) => s.id !== deleteStoryId);
+      myStories = myStories.filter((s) => s.id !== deleteStoryId);
+      renderBrowse();
+      renderMyStories();
+      showToast("تم حذف القصة.");
+    } catch (err) {
+      showToast("فشل الحذف. حاول لاحقاً.", true);
+    } finally {
+      closeDeleteModal();
+    }
+  });
 
 // MODAL
 function openModal(story) {
   const date = story.date
-    ? new Date(story.date).toLocaleDateString("ar-PS", { year:"numeric", month:"long", day:"numeric" })
+    ? new Date(story.date).toLocaleDateString("ar-PS", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
     : "غير محدد";
 
   document.getElementById("modalTag").innerHTML =
     `<span class="story-card__tag tag--${story.tag}">${story.tag}</span>`;
-  document.getElementById("modalTitle").textContent    = story.title;
-  document.getElementById("modalAuthor").textContent   = story.author   || "مجهول";
-  document.getElementById("modalLocation").textContent = story.location || "غزة";
-  document.getElementById("modalDate").textContent     = date;
-  document.getElementById("modalBody").textContent     = story.content;
+  document.getElementById("modalTitle").textContent = story.title;
+  document.getElementById("modalAuthor").textContent = story.author || "مجهول";
+  document.getElementById("modalLocation").textContent =
+    story.location || "غزة";
+  document.getElementById("modalDate").textContent = date;
+  document.getElementById("modalBody").textContent = story.content;
 
   document.getElementById("modalOverlay").classList.add("active");
   document.body.style.overflow = "hidden";
 
   document.getElementById("modalCopyBtn").onclick = () => {
-    navigator.clipboard.writeText(
-      `${story.title}\n\n${story.content}\n\n— ${story.author || "مجهول"}, ${story.location || "غزة"}`
-    ).then(() => showToast("تم نسخ القصة ✓"));
+    navigator.clipboard
+      .writeText(
+        `${story.title}\n\n${story.content}\n\n— ${story.author || "مجهول"}, ${story.location || "غزة"}`,
+      )
+      .then(() => showToast("تم نسخ القصة ✓"));
   };
 }
 
@@ -359,9 +387,9 @@ function openModal(story) {
 function validateStoryForm() {
   clearFormErrors();
   let valid = true;
-  const title   = document.getElementById("dStoryTitle");
+  const title = document.getElementById("dStoryTitle");
   const content = document.getElementById("dStoryContent");
-  const agree   = document.getElementById("dAgreeCheck");
+  const agree = document.getElementById("dAgreeCheck");
 
   if (!title.value.trim()) {
     document.getElementById("dTitleError").classList.add("visible");
@@ -380,16 +408,18 @@ function validateStoryForm() {
   return valid;
 }
 function clearFormErrors() {
-  document.querySelectorAll(".form-error")
-    .forEach(el => el.classList.remove("visible"));
-  document.querySelectorAll(".form-input, .form-textarea")
-    .forEach(el => el.classList.remove("error"));
+  document
+    .querySelectorAll(".form-error")
+    .forEach((el) => el.classList.remove("visible"));
+  document
+    .querySelectorAll(".form-input, .form-textarea")
+    .forEach((el) => el.classList.remove("error"));
 }
 
 // TOAST
 let toastTimer;
 function showToast(msg, isInfo = false) {
-  const toast   = document.getElementById("toast");
+  const toast = document.getElementById("toast");
   const toastMsg = document.getElementById("toastMsg");
   toastMsg.textContent = msg;
   toast.querySelector(".toast__icon").textContent = isInfo ? "ℹ" : "✓";
@@ -400,29 +430,35 @@ function showToast(msg, isInfo = false) {
 
 function escHtml(str) {
   return String(str)
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 // BIND EVENTS
 function bindDashEvents() {
   // نموذج الكتابة
-  document.getElementById("dashStoryForm")
+  document
+    .getElementById("dashStoryForm")
     .addEventListener("submit", handleStorySubmit);
 
   // عدّاد الحروف
-  document.getElementById("dStoryContent").addEventListener("input", function() {
-    const len = this.value.length;
-    document.getElementById("dCharCount").textContent = len;
-    if (len > MAX_CHARS) this.value = this.value.slice(0, MAX_CHARS);
-    this.classList.remove("error");
-  });
+  document
+    .getElementById("dStoryContent")
+    .addEventListener("input", function () {
+      const len = this.value.length;
+      document.getElementById("dCharCount").textContent = len;
+      if (len > MAX_CHARS) this.value = this.value.slice(0, MAX_CHARS);
+      this.classList.remove("error");
+    });
 
   // فلاتر تصفح
-  document.querySelectorAll(".filter-btn").forEach(btn => {
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter-btn")
-        .forEach(b => b.classList.remove("filter-btn--active"));
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("filter-btn--active"));
       btn.classList.add("filter-btn--active");
       activeFilter = btn.dataset.filter;
       renderBrowse();
@@ -441,7 +477,7 @@ function bindDashEvents() {
     document.getElementById("modalOverlay").classList.remove("active");
     document.body.style.overflow = "";
   });
-  document.getElementById("modalOverlay").addEventListener("click", e => {
+  document.getElementById("modalOverlay").addEventListener("click", (e) => {
     if (e.target === document.getElementById("modalOverlay")) {
       document.getElementById("modalOverlay").classList.remove("active");
       document.body.style.overflow = "";
@@ -449,17 +485,22 @@ function bindDashEvents() {
   });
 
   // Escape
-  document.addEventListener("keydown", e => {
+  document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      document.querySelectorAll(".modal-overlay.active")
-        .forEach(el => el.classList.remove("active"));
+      document
+        .querySelectorAll(".modal-overlay.active")
+        .forEach((el) => el.classList.remove("active"));
       document.body.style.overflow = "";
     }
   });
 
   // nav shadow
-  window.addEventListener("scroll", () => {
-    document.querySelector(".nav").style.boxShadow =
-      window.scrollY > 10 ? "0 4px 24px rgba(0,0,0,0.5)" : "none";
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      document.querySelector(".nav").style.boxShadow =
+        window.scrollY > 10 ? "0 4px 24px rgba(0,0,0,0.5)" : "none";
+    },
+    { passive: true },
+  );
 }
