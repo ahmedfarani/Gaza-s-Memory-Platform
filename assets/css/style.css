@@ -1873,19 +1873,3 @@ body {
     align-self: flex-end;
   }
 }
-
-/* ── حل مشكلة أزرار الهيدر على الجوال بدون تعديل HTML ── */
-@media (max-width: 600px) {
-  .header__actions .btn {
-    font-size: 0; /* إخفاء النص العادي بجعله صفر */
-    gap: 0; /* إلغاء الفراغ بين الأيقونة والنص المخفي */
-    padding: 10px; /* جعل الزر مربع ومناسب للأيقونة فقط */
-    justify-content: center;
-  }
-  
-  /* التأكد من عدم تأثر الأيقونة بحجم الخط الصفر */
-  .header__actions .btn svg {
-    width: 18px;
-    height: 18px;
-  }
-}
