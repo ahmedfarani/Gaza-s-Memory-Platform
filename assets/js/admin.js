@@ -9,7 +9,7 @@ let deleteUserId = null;
 // ── حماية: فقط الأدمن يدخل هذه الصفحة
 auth.onAuthStateChanged(async (user) => {
   if (!user) {
-    window.location.replace("login.html");
+    window.location.replace("admin.html");
     return;
   }
 
