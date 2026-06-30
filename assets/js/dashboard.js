@@ -37,6 +37,7 @@ async function initDashboard() {
       : currentUser.email;
 
     document.getElementById("navUserName").textContent = name;
+    document.getElementById("navUserNameMobile").textContent = name;
     document.getElementById("sidebarUserName").textContent = name;
     document.getElementById("sidebarUserEmail").textContent = currentUser.email;
 
@@ -44,13 +45,17 @@ async function initDashboard() {
     document.getElementById("dashAvatar").textContent = initial;
   } catch (_) {}
 
-  // زر خروج
+  // زر خروج — ديسكتوب وموبايل
+  const doLogout = async () => {
+    await auth.signOut();
+    window.location.replace("login.html");
+  };
+  document.getElementById("navLogoutBtn").addEventListener("click", doLogout);
   document
-    .getElementById("navLogoutBtn")
-    .addEventListener("click", async () => {
-      await auth.signOut();
-      window.location.replace("login.html");
-    });
+    .getElementById("navLogoutBtnMobile")
+    .addEventListener("click", doLogout);
+
+  initMobileNav();
 
   await Promise.all([loadAllStories(), loadMyStories()]);
   bindDashEvents();
@@ -403,6 +408,9 @@ function validateStoryForm() {
   }
   if (!agree.checked) {
     document.getElementById("dAgreeError").classList.add("visible");
+    document
+      .getElementById("dAgreeLabel")
+      .classList.add("form-checkbox--error");
     valid = false;
   }
   return valid;
@@ -414,6 +422,9 @@ function clearFormErrors() {
   document
     .querySelectorAll(".form-input, .form-textarea")
     .forEach((el) => el.classList.remove("error"));
+  document
+    .getElementById("dAgreeLabel")
+    ?.classList.remove("form-checkbox--error");
 }
 
 // TOAST
@@ -451,6 +462,18 @@ function bindDashEvents() {
       document.getElementById("dCharCount").textContent = len;
       if (len > MAX_CHARS) this.value = this.value.slice(0, MAX_CHARS);
       this.classList.remove("error");
+    });
+
+  // زر الموافقة — يشيل حالة الخطأ فور التفعيل
+  document
+    .getElementById("dAgreeCheck")
+    .addEventListener("change", function () {
+      if (this.checked) {
+        document.getElementById("dAgreeError").classList.remove("visible");
+        document
+          .getElementById("dAgreeLabel")
+          .classList.remove("form-checkbox--error");
+      }
     });
 
   // فلاتر تصفح
