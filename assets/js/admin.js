@@ -9,7 +9,7 @@ let deleteUserId = null;
 // ── حماية: فقط الأدمن يدخل هذه الصفحة
 auth.onAuthStateChanged(async (user) => {
   if (!user) {
-    window.location.replace("admin.html");
+    window.location.replace("login.html");
     return;
   }
 
@@ -20,20 +20,25 @@ auth.onAuthStateChanged(async (user) => {
     return;
   }
 
-  // اسم الأدمن
+  // اسم الأدمن — ديسكتوب وموبايل
   try {
     const doc = await db.collection("users").doc(user.uid).get();
     const name = doc.exists ? doc.data().name || user.email : user.email;
     document.getElementById("adminName").textContent = name;
+    document.getElementById("adminNameMobile").textContent = name;
   } catch (_) {}
 
-  // زر خروج
+  // زر خروج — ديسكتوب وموبايل
+  const doLogout = async () => {
+    await auth.signOut();
+    window.location.replace("login.html");
+  };
+  document.getElementById("navLogoutBtn").addEventListener("click", doLogout);
   document
-    .getElementById("navLogoutBtn")
-    .addEventListener("click", async () => {
-      await auth.signOut();
-      window.location.replace("login.html");
-    });
+    .getElementById("navLogoutBtnMobile")
+    .addEventListener("click", doLogout);
+
+  initMobileNav();
 
   await Promise.all([loadAllStories(), loadAllUsers()]);
   bindAdminEvents();
