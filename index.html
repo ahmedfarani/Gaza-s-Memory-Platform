@@ -43,6 +43,72 @@
         <a href="#storiesCta" class="nav__link nav__link--cta nav__guest-only"
           >شارك قصتك</a
         >
+
+        <!-- زر الهامبرغر — يظهر فقط على الموبايل -->
+        <button
+          class="nav__hamburger"
+          id="navHamburger"
+          aria-label="فتح القائمة"
+          aria-expanded="false"
+        >
+          <span class="nav__hamburger-bar"></span>
+          <span class="nav__hamburger-bar"></span>
+          <span class="nav__hamburger-bar"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ===== MOBILE MENU ===== -->
+    <div class="nav__mobile-backdrop" id="navMobileBackdrop"></div>
+    <aside class="nav__mobile-panel" id="navMobilePanel">
+      <div class="nav__mobile-panel-header">
+        <div class="nav__logo">
+          <span class="nav__symbol">☽</span>
+          <span class="nav__title">ذاكرة غزة</span>
+        </div>
+      </div>
+
+      <!-- يظهر فقط إذا مسجّل دخول -->
+      <div class="nav__mobile-welcome nav__auth-only" style="display: none">
+        أهلاً، <strong id="navUserNameMobile">—</strong>
+      </div>
+
+      <nav class="nav__mobile-links">
+        <a href="#stories" class="nav__mobile-link" id="navMobileStories"
+          >القصص</a
+        >
+
+        <!-- زائر -->
+        <a
+          href="pages/login.html"
+          class="nav__mobile-link nav__guest-only"
+          >تسجيل الدخول</a
+        >
+        <a
+          href="#storiesCta"
+          class="nav__mobile-link nav__mobile-link--cta nav__guest-only"
+          id="navMobileShareBtn"
+          >شارك قصتك</a
+        >
+
+        <!-- مسجّل -->
+        <a
+          href="pages/dashboard.html"
+          class="nav__mobile-link nav__mobile-link--cta nav__auth-only"
+          style="display: none"
+          >لوحتي</a
+        >
+        <div class="nav__mobile-divider nav__auth-only" style="display: none"></div>
+        <button
+          class="nav__mobile-link nav__mobile-link--logout nav__auth-only"
+          id="navLogoutBtnMobile"
+          style="display: none"
+        >
+          خروج
+        </button>
+      </nav>
+    </aside>
+    
       </div>
     </nav>
 
@@ -83,7 +149,7 @@
         </div>
         <div class="stat__divider"></div>
         <div class="stat">
-          <span class="stat__num">∞</span>
+          <span class="stat__num">0</span>
           <span class="stat__label">ذكرى محفوظة</span>
         </div>
       </div>

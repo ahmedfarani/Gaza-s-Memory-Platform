@@ -13,6 +13,7 @@ let searchQuery = "";
 const storiesGrid = document.getElementById("storiesGrid");
 const emptyState = document.getElementById("emptyState");
 const storyCount = document.getElementById("storyCount");
+const memoryCount = document.getElementById("memoryCount");
 const searchInput = document.getElementById("searchInput");
 const modalOverlay = document.getElementById("modalOverlay");
 const modalClose = document.getElementById("modalClose");
@@ -29,23 +30,34 @@ auth.onAuthStateChanged(async (user) => {
     guestEls.forEach((el) => (el.style.display = "none"));
     authEls.forEach((el) => (el.style.display = ""));
 
-    // اسمه في الـ nav
+    // اسمه في الـ nav (ديسكتوب + موبايل)
     const nameEl = document.getElementById("navUserName");
-    if (nameEl) {
+    const nameElMobile = document.getElementById("navUserNameMobile");
+    if (nameEl || nameElMobile) {
       try {
         const doc = await db.collection("users").doc(user.uid).get();
-        nameEl.textContent = doc.exists
+        const displayName = doc.exists
           ? doc.data().name || user.email
           : user.email;
+        if (nameEl) nameEl.textContent = displayName;
+        if (nameElMobile) nameElMobile.textContent = displayName;
       } catch (_) {
-        nameEl.textContent = user.email;
+        if (nameEl) nameEl.textContent = user.email;
+        if (nameElMobile) nameElMobile.textContent = user.email;
       }
     }
 
-    // زر خروج
+    // زر خروج — ديسكتوب وموبايل
     const logoutBtn = document.getElementById("navLogoutBtn");
     if (logoutBtn) {
       logoutBtn.addEventListener("click", async () => {
+        await auth.signOut();
+        window.location.reload();
+      });
+    }
+    const logoutBtnMobile = document.getElementById("navLogoutBtnMobile");
+    if (logoutBtnMobile) {
+      logoutBtnMobile.addEventListener("click", async () => {
         await auth.signOut();
         window.location.reload();
       });
@@ -79,7 +91,9 @@ async function apiFetchStories() {
 }
 
 function updateCount() {
+  // عدد القصص الحقيقي من Firestore — نفس الرقم في الاثنين
   storyCount.textContent = stories.length;
+  if (memoryCount) memoryCount.textContent = stories.length;
 }
 
 function getFilteredStories() {
@@ -246,4 +260,7 @@ function bindEvents() {
   );
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => {
+  init();
+  initMobileNav();
+});

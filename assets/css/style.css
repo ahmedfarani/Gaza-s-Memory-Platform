@@ -188,6 +188,177 @@ body {
   color: var(--white);
 }
 
+/* ================================================================
+   MOBILE HAMBURGER MENU
+   ================================================================ */
+
+/* الزر نفسه — مخفي على الديسكتوب */
+.nav__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  position: relative;
+  z-index: 210;
+}
+.nav__hamburger:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.nav__hamburger-bar {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: var(--sand);
+  border-radius: 2px;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s,
+    background 0.2s;
+}
+.nav__hamburger-bar:nth-child(1) { transform: translateY(-6px); }
+.nav__hamburger-bar:nth-child(2) { transform: translateY(0); }
+.nav__hamburger-bar:nth-child(3) { transform: translateY(6px); }
+
+/* حالة X لما يكون مفتوح */
+.nav__hamburger--active .nav__hamburger-bar {
+  background: var(--gold);
+}
+.nav__hamburger--active .nav__hamburger-bar:nth-child(1) {
+  transform: translateY(0) rotate(45deg);
+}
+.nav__hamburger--active .nav__hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav__hamburger--active .nav__hamburger-bar:nth-child(3) {
+  transform: translateY(0) rotate(-45deg);
+}
+
+/* خلفية شفافة خلف القائمة عند فتحها */
+.nav__mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 190;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.nav__mobile-backdrop--active {
+  display: block;
+  opacity: 1;
+}
+
+/* القائمة المنسدلة نفسها */
+.nav__mobile-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(78vw, 320px);
+  background: var(--bg-mid);
+  border-left: 1px solid var(--border);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 32px;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.4);
+}
+.nav__mobile-panel--active {
+  transform: translateX(0);
+}
+
+.nav__mobile-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav__mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--sand-dim);
+  text-decoration: none;
+  padding: 13px 14px;
+  border-radius: 10px;
+  transition:
+    background 0.18s,
+    color 0.18s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+}
+.nav__mobile-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--sand);
+}
+
+.nav__mobile-link--cta {
+  background: var(--terra);
+  color: var(--white) !important;
+  font-weight: 700;
+  justify-content: center;
+  margin-top: 10px;
+}
+.nav__mobile-link--cta:hover {
+  background: var(--terra-light);
+}
+
+.nav__mobile-link--logout {
+  color: var(--terra-light);
+  margin-top: auto;
+}
+.nav__mobile-link--logout:hover {
+  background: rgba(196, 96, 58, 0.1);
+  color: var(--terra-light);
+}
+
+.nav__mobile-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 4px;
+}
+
+.nav__mobile-welcome {
+  font-size: 0.85rem;
+  color: var(--sand-muted);
+  padding: 8px 14px 16px;
+}
+.nav__mobile-welcome strong {
+  color: var(--sand);
+  font-weight: 700;
+}
+
+/* منع scroll الخلفية عند فتح القائمة */
+body.nav-locked {
+  overflow: hidden;
+}
+
 .hero__content {
   position: relative;
   z-index: 1;
@@ -808,14 +979,43 @@ body {
   display: block;
 }
 
+/* ================================================================
+   زر الموافقة — بطاقة بارزة بدل تشيك بوكس صغير منسي
+   ================================================================ */
 .form-checkbox {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 14px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--sand-dim);
-  line-height: 1.5;
+  line-height: 1.6;
+  padding: 16px 18px;
+  border: 1.5px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  background: rgba(212, 168, 56, 0.04);
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.form-checkbox:hover {
+  border-color: var(--gold-dim);
+  background: rgba(212, 168, 56, 0.07);
+}
+
+/* حالة عدم الموافقة بعد الضغط على نشر — لفت نظر واضح */
+.form-checkbox--error {
+  border-color: var(--terra);
+  background: rgba(196, 96, 58, 0.08);
+  animation: agreeShake 0.4s ease;
+}
+
+@keyframes agreeShake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
 }
 
 .form-checkbox input {
@@ -824,28 +1024,51 @@ body {
 
 .checkbox-custom {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--border-hover);
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--gold-dim);
+  border-radius: 6px;
   background: var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
-  margin-top: 2px;
+  margin-top: 1px;
+}
+
+.form-checkbox:hover .checkbox-custom {
+  border-color: var(--gold);
 }
 
 .form-checkbox input:checked + .checkbox-custom {
   background: var(--terra);
   border-color: var(--terra);
+  box-shadow: 0 0 0 4px rgba(196, 96, 58, 0.15);
 }
 
 .form-checkbox input:checked + .checkbox-custom::after {
   content: "✓";
   color: white;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.form-checkbox--error .checkbox-custom {
+  border-color: var(--terra);
+}
+
+/* النص نفسه — أوضح وفيه كلمة "مطلوب" */
+.form-checkbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.form-checkbox__required {
+  font-size: 0.72rem;
   font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.04em;
 }
 
 .modal-overlay {
@@ -1191,12 +1414,13 @@ body {
     padding: 14px 20px;
   }
 
-  .nav__links {
-    gap: 14px;
+  /* إخفاء الروابط الأفقية القديمة بالكامل، وإظهار الهامبرغر بدلها */
+  .nav__links > *:not(.nav__hamburger) {
+    display: none !important;
   }
 
-  .nav__link:not(.nav__link--cta) {
-    display: none;
+  .nav__hamburger {
+    display: flex;
   }
 
   .hero {
