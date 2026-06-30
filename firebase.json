@@ -20,7 +20,7 @@
     "rewrites": [
       {
         "source": "/auth",
-        "destination": "/pages/auth.html"
+        "destination": "/pages/login.html"
       },
       {
         "source": "/dashboard",
